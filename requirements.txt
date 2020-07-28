@@ -1,0 +1,9 @@
+django
+djangorestframework
+pillow
+psycopg2
+pygments
+django-filter
+django-guardian
+markdown
+django-cors-headers

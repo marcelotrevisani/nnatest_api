@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  nnatest_api:
+    container_name: nnatest_api
+    env_file:
+      - .env
+    build:
+      context: .
+    ports:
+      - "${PORT_REDIRECT_FROM_SYS}:${PORT_RUN_NNA}"
+    volumes:
+      - ./nnatest_api:/nnatest_api
+    command: >
+     sh -c "python manage.py wait_for_db &&
+            python manage.py migrate &&
+            python manage.py runserver ${HOST_RUN_NNA}:${PORT_RUN_NNA}"
+
+    depends_on:
+      - db
+
+  db:
+    container_name: postgres
+    image: postgres:13-alpine
+    env_file:
+      - postgres_db.env
